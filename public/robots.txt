@@ -7,4 +7,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://how-much-gravel.pages.dev/sitemap.xml
