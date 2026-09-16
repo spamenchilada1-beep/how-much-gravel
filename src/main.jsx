@@ -64,7 +64,7 @@ function App() {
         <p className="intro">This is a free gravel calculator for homeowners, contractors, and DIYers that estimates how much gravel to order from area dimensions and depth.</p>
       </header>
 
-      <aside className="ad-slot" aria-label="Reserved advertising space">Reserved for a future sponsor</aside>
+      
 
       <section className="calculator-card" aria-labelledby="calculator-title">
         <div className="calculator-heading"><h2 id="calculator-title">Get your gravel estimate</h2><p>Enter the finished area and planned gravel depth.</p></div>
@@ -103,8 +103,8 @@ function App() {
         <section><h2>Why your supplier's number may differ</h2><p>Your supplier may use a different tons-per-yard conversion for their specific material. Ask for their product density and use their advice when placing the order. The calculator's 1.4 tons per cubic yard is a transparent planning estimate—not a material specification.</p></section>
         <section><h2>FAQ</h2><details><summary>Should I order extra gravel?</summary><p>This calculator adds a 10% planning allowance to help with normal variation. It is not a universal requirement; consider your site, access, and supplier guidance.</p></details><details><summary>Can I use this as a driveway gravel calculator?</summary><p>Yes. Enter the driveway dimensions and your planned depth. For vehicle areas, confirm base and depth requirements with a qualified local contractor or supplier.</p></details><details><summary>Does this work for pea gravel?</summary><p>Yes, as a volume planning tool. Check the supplier's density for a more material-specific ton estimate.</p></details></section>
       </article>
-      <aside className="affiliate-slot" aria-label="Reserved affiliate recommendations"><strong>Future project recommendations</strong><span>Space reserved for useful items such as landscape fabric, edging, wheelbarrows, and compactors.</span></aside>
-      <aside className="ad-slot bottom" aria-label="Reserved advertising space">Reserved for a future sponsor</aside>
+      
+      
     </main>
     <footer>Free gravel calculator for practical planning.</footer>
   </>
