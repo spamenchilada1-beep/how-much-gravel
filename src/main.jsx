@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { calculateGravel, createCopyText, formatNumber, startingDepths } from './calculator'
 import { track } from './analytics'
@@ -6,88 +6,39 @@ import './styles.css'
 
 const initialForm = { length: '', width: '', depth: '', projectType: 'Driveway' }
 
-const AD_SCRIPT_SRC =
-  'https://pl31366414.profitableratecpmnetwork.com/e02274bb7cfdb93d7f3052df47da3704/invoke.js'
-
-const AD_CONTAINER_ID = 'container-e02274bb7cfdb93d7f3052df47da3704'
-
 function App() {
   const [form, setForm] = useState(initialForm)
   const [started, setStarted] = useState(false)
   const [copyStatus, setCopyStatus] = useState(null)
   const formRef = useRef(null)
-  const adWrapperRef = useRef(null)
-
-  const result = useMemo(
-    () => calculateGravel(form),
-    [form.length, form.width, form.depth]
-  )
-
+  const result = useMemo(() => calculateGravel(form), [form.length, form.width, form.depth])
   const hasValues = form.length !== '' || form.width !== '' || form.depth !== ''
   const validResult = result.errors.length === 0 && hasValues
-
-  useEffect(() => {
-    const wrapper = adWrapperRef.current
-    if (!wrapper) return
-    if (wrapper.dataset.loaded === 'true') return
-
-    const container = wrapper.querySelector(`#${AD_CONTAINER_ID}`)
-    if (!container) return
-
-    const script = document.createElement('script')
-    script.async = true
-    script.setAttribute('data-cfasync', 'false')
-    script.src = AD_SCRIPT_SRC
-
-    wrapper.insertBefore(script, container)
-    wrapper.dataset.loaded = 'true'
-
-    return () => {
-      script.remove()
-      wrapper.dataset.loaded = 'false'
-    }
-  }, [])
 
   const update = (field, value) => {
     if (!started) {
       setStarted(true)
       track('calculator_started')
     }
-
     setCopyStatus(null)
     setForm(current => ({ ...current, [field]: value }))
   }
 
-  const onProjectType = projectType => {
+  const onProjectType = (projectType) => {
     const suggestedDepth = startingDepths[projectType]
-
     update('projectType', projectType)
-
-    if (suggestedDepth && !form.depth) {
-      setForm(current => ({
-        ...current,
-        projectType,
-        depth: String(suggestedDepth),
-      }))
-    }
+    if (suggestedDepth && !form.depth) setForm(current => ({ ...current, projectType, depth: String(suggestedDepth) }))
   }
 
   const onSubmit = event => {
     event.preventDefault()
     setStarted(true)
-
-    if (validResult) {
-      track('calculation_completed', {
-        projectType: form.projectType,
-      })
-    }
+    if (validResult) track('calculation_completed', { projectType: form.projectType })
   }
 
   const copy = async () => {
     if (!validResult) return
-
     const content = createCopyText({ ...form, result })
-
     try {
       await navigator.clipboard.writeText(content)
       setCopyStatus('success')
@@ -105,280 +56,58 @@ function App() {
     formRef.current?.querySelector('input')?.focus()
   }
 
-  return (
-    <>
-      <main className="site-shell">
-        <header className="hero">
-          <p className="eyebrow">Simple gravel estimator</p>
-          <h1>How Much Gravel Do I Need?</h1>
-          <p className="intro">
-            This is a free gravel calculator for homeowners, contractors, and DIYers that estimates
-            how much gravel to order from area dimensions and depth.
-          </p>
-        </header>
+  return <>
+    <main className="site-shell">
+      <header className="hero">
+        <p className="eyebrow">Simple gravel estimator</p>
+        <h1>How Much Gravel Do I Need?</h1>
+        <p className="intro">This is a free gravel calculator for homeowners, contractors, and DIYers that estimates how much gravel to order from area dimensions and depth.</p>
+      </header>
 
-        <section className="calculator-card" aria-labelledby="calculator-title">
-          <div className="calculator-heading">
-            <h2 id="calculator-title">Get your gravel estimate</h2>
-            <p>Enter the finished area and planned gravel depth.</p>
+      <aside className="ad-slot" aria-label="Reserved advertising space">Reserved for a future sponsor</aside>
+
+      <section className="calculator-card" aria-labelledby="calculator-title">
+        <div className="calculator-heading"><h2 id="calculator-title">Get your gravel estimate</h2><p>Enter the finished area and planned gravel depth.</p></div>
+        <form onSubmit={onSubmit} ref={formRef} noValidate>
+          <div className="field-grid">
+            <label>Length <span>(feet)</span><input inputMode="decimal" type="number" min="0" step="any" value={form.length} onChange={e => update('length', e.target.value)} aria-invalid={Boolean(result.errors.find(error => error.startsWith('Length')))} /></label>
+            <label>Width <span>(feet)</span><input inputMode="decimal" type="number" min="0" step="any" value={form.width} onChange={e => update('width', e.target.value)} aria-invalid={Boolean(result.errors.find(error => error.startsWith('Width')))} /></label>
+            <label>Depth <span>(inches)</span><input inputMode="decimal" type="number" min="0" step="any" value={form.depth} onChange={e => update('depth', e.target.value)} aria-invalid={Boolean(result.errors.find(error => error.startsWith('Depth')))} /></label>
+            <label>Project type <span>(optional)</span><select value={form.projectType} onChange={e => onProjectType(e.target.value)}><option>Driveway</option><option>Walkway</option><option>Patio</option><option>Landscape Bed</option><option>Other</option></select></label>
           </div>
+          <p className="hint">Planning suggestions: driveway 4 in, walkway 3 in, patio 4 in, landscape bed 3 in. Site conditions and material may call for something different.</p>
+          {started && result.errors.length > 0 && <div className="errors" role="alert">{result.errors.map(error => <p key={error}>{error}</p>)}</div>}
+          <button className="primary-button" type="submit">Calculate gravel</button>
+        </form>
 
-          <form onSubmit={onSubmit} ref={formRef} noValidate>
-            <div className="field-grid">
-              <label>
-                Length <span>(feet)</span>
-                <input
-                  inputMode="decimal"
-                  type="number"
-                  min="0"
-                  step="any"
-                  value={form.length}
-                  onChange={e => update('length', e.target.value)}
-                  aria-invalid={Boolean(
-                    result.errors.find(error => error.startsWith('Length'))
-                  )}
-                />
-              </label>
-
-              <label>
-                Width <span>(feet)</span>
-                <input
-                  inputMode="decimal"
-                  type="number"
-                  min="0"
-                  step="any"
-                  value={form.width}
-                  onChange={e => update('width', e.target.value)}
-                  aria-invalid={Boolean(
-                    result.errors.find(error => error.startsWith('Width'))
-                  )}
-                />
-              </label>
-
-              <label>
-                Depth <span>(inches)</span>
-                <input
-                  inputMode="decimal"
-                  type="number"
-                  min="0"
-                  step="any"
-                  value={form.depth}
-                  onChange={e => update('depth', e.target.value)}
-                  aria-invalid={Boolean(
-                    result.errors.find(error => error.startsWith('Depth'))
-                  )}
-                />
-              </label>
-
-              <label>
-                Project type <span>(optional)</span>
-                <select value={form.projectType} onChange={e => onProjectType(e.target.value)}>
-                  <option>Driveway</option>
-                  <option>Walkway</option>
-                  <option>Patio</option>
-                  <option>Landscape Bed</option>
-                  <option>Other</option>
-                </select>
-              </label>
-            </div>
-
-            <p className="hint">
-              Planning suggestions: driveway 4 in, walkway 3 in, patio 4 in, landscape bed 3 in.
-              Site conditions and material may call for something different.
-            </p>
-
-            {started && result.errors.length > 0 && (
-              <div className="errors" role="alert">
-                {result.errors.map(error => (
-                  <p key={error}>{error}</p>
-                ))}
-              </div>
-            )}
-
-            <button className="primary-button" type="submit">
-              Calculate gravel
-            </button>
-          </form>
-
-          <section
-            className="result"
-            aria-live="polite"
-            aria-label="Gravel calculation result"
-          >
-            {validResult ? (
-              <>
-                <p className="result-label">Calculated quantity:</p>
-
-                <output className="yards">
-                  {formatNumber(result.cubicYards)} <span>cubic yards</span>
-                </output>
-
-                <div className="order">
-                  <span>Recommended order</span>
-                  <strong>
-                    {formatNumber(result.recommendedCubicYards)} cubic yards
-                  </strong>
-                  <small>
-                    Includes a 10% planning allowance for waste, settling, and measurement
-                    variation. It is not a universal engineering requirement.
-                  </small>
-                </div>
-
-                <p className="weight">
-                  Estimated weight: <strong>{formatNumber(result.estimatedTons)} tons</strong>
-                </p>
-
-                <div className="order">
-                  <span>Recommended order</span>
-                  <strong>{formatNumber(result.recommendedTons)} tons</strong>
-                </div>
-
-                <div className="actions">
-                  <button className="secondary-button" type="button" onClick={copy}>
-                    {copyStatus === 'success' ? 'Copied!' : 'Copy Results'}
-                  </button>
-
-                  <button className="text-button" type="button" onClick={reset}>
-                    Reset
-                  </button>
-                </div>
-
-                {copyStatus === 'success' && (
-                  <p className="copy-status" role="status">
-                    Results copied.
-                  </p>
-                )}
-
-                {copyStatus === 'error' && (
-                  <p className="copy-status copy-error" role="status">
-                    Copy unavailable. Please try again.
-                  </p>
-                )}
-              </>
-            ) : (
-              <p className="empty-result">Your estimate will appear here.</p>
-            )}
-          </section>
-
-          <p className="assumption">
-            Gravel density varies by material and supplier. This tool uses a planning estimate of
-            1.4 tons per cubic yard unless you use a supplier-provided density.
-          </p>
+        <section className="result" aria-live="polite" aria-label="Gravel calculation result">
+          {validResult ? <>
+            <p className="result-label">Calculated quantity:</p>
+            <output className="yards">{formatNumber(result.cubicYards)} <span>cubic yards</span></output>
+            <div className="order"><span>Recommended order</span><strong>{formatNumber(result.recommendedCubicYards)} cubic yards</strong><small>Includes a 10% planning allowance for waste, settling, and measurement variation. It is not a universal engineering requirement.</small></div>
+            <p className="weight">Estimated weight: <strong>{formatNumber(result.estimatedTons)} tons</strong></p>
+            <div className="order"><span>Recommended order</span><strong>{formatNumber(result.recommendedTons)} tons</strong></div>
+            <div className="actions"><button className="secondary-button" type="button" onClick={copy}>{copyStatus === 'success' ? 'Copied!' : 'Copy Results'}</button><button className="text-button" type="button" onClick={reset}>Reset</button></div>
+            {copyStatus === 'success' && <p className="copy-status" role="status">Results copied.</p>}
+            {copyStatus === 'error' && <p className="copy-status copy-error" role="status">Copy unavailable. Please try again.</p>}
+          </> : <p className="empty-result">Your estimate will appear here.</p>}
         </section>
+        <p className="assumption">Gravel density varies by material and supplier. This tool uses a planning estimate of 1.4 tons per cubic yard unless you use a supplier-provided density.</p>
+      </section>
 
-        <aside
-          ref={adWrapperRef}
-          className="ad-slot ad-native"
-          aria-label="Advertisement"
-        >
-          <div id={AD_CONTAINER_ID}></div>
-        </aside>
-
-        <article className="content">
-          <section>
-            <h2>How the calculator works</h2>
-            <p>
-              Measure the length and width of the space in feet, then choose the depth of gravel
-              you plan to install. The gravel calculator turns that volume into cubic yards,
-              estimates weight in tons, and adds a modest ordering buffer.
-            </p>
-
-            <div className="method">
-              <strong>Methodology</strong>
-              <p>
-                Cubic feet = length × width × (depth in inches ÷ 12)
-                <br />
-                Cubic yards = cubic feet ÷ 27
-                <br />
-                Estimated tons = cubic yards × 1.4
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2>How much gravel do I need?</h2>
-            <p>
-              Start with the dimensions of the area you want to cover. A rectangular driveway,
-              walkway, patio base, or landscape bed is easy to estimate with length × width ×
-              depth. For curved areas, divide the shape into simple sections, calculate each, then
-              add the results.
-            </p>
-          </section>
-
-          <section>
-            <h2>How deep should gravel be?</h2>
-            <p>
-              Depth depends on the job, the base below it, drainage, local conditions, and the
-              gravel itself. About 3 inches can be a starting point for a walkway or landscape bed;
-              a driveway often needs a deeper, properly prepared base. These are planning
-              suggestions, not universal installation rules.
-            </p>
-          </section>
-
-          <section>
-            <h2>Cubic yards vs tons</h2>
-            <p>
-              Cubic yards measure volume. Tons measure weight. Suppliers may sell driveway gravel,
-              pea gravel, or crushed stone by either measure. Because rock size, material type, and
-              moisture affect density, one cubic yard does not always weigh the same amount.
-            </p>
-          </section>
-
-          <section>
-            <h2>Why your supplier's number may differ</h2>
-            <p>
-              Your supplier may use a different tons-per-yard conversion for their specific
-              material. Ask for their product density and use their advice when placing the order.
-              The calculator's 1.4 tons per cubic yard is a transparent planning estimate—not a
-              material specification.
-            </p>
-          </section>
-
-          <section>
-            <h2>FAQ</h2>
-
-            <details>
-              <summary>Should I order extra gravel?</summary>
-              <p>
-                This calculator adds a 10% planning allowance to help with normal variation. It is
-                not a universal requirement; consider your site, access, and supplier guidance.
-              </p>
-            </details>
-
-            <details>
-              <summary>Can I use this as a driveway gravel calculator?</summary>
-              <p>
-                Yes. Enter the driveway dimensions and your planned depth. For vehicle areas,
-                confirm base and depth requirements with a qualified local contractor or supplier.
-              </p>
-            </details>
-
-            <details>
-              <summary>Does this work for pea gravel?</summary>
-              <p>
-                Yes, as a volume planning tool. Check the supplier's density for a more
-                material-specific ton estimate.
-              </p>
-            </details>
-          </section>
-        </article>
-
-        <aside className="affiliate-slot" aria-label="Reserved affiliate recommendations">
-          <strong>Future project recommendations</strong>
-          <span>
-            Space reserved for useful items such as landscape fabric, edging, wheelbarrows, and
-            compactors.
-          </span>
-        </aside>
-
-        <aside className="ad-slot bottom" aria-label="Reserved advertising space">
-          Reserved for a future sponsor
-        </aside>
-      </main>
-
-      <footer>Free gravel calculator for practical planning.</footer>
-    </>
-  )
+      <article className="content">
+        <section><h2>How the calculator works</h2><p>Measure the length and width of the space in feet, then choose the depth of gravel you plan to install. The gravel calculator turns that volume into cubic yards, estimates weight in tons, and adds a modest ordering buffer.</p><div className="method"><strong>Methodology</strong><p>Cubic feet = length × width × (depth in inches ÷ 12)<br />Cubic yards = cubic feet ÷ 27<br />Estimated tons = cubic yards × 1.4</p></div></section>
+        <section><h2>How much gravel do I need?</h2><p>Start with the dimensions of the area you want to cover. A rectangular driveway, walkway, patio base, or landscape bed is easy to estimate with length × width × depth. For curved areas, divide the shape into simple sections, calculate each, then add the results.</p></section>
+        <section><h2>How deep should gravel be?</h2><p>Depth depends on the job, the base below it, drainage, local conditions, and the gravel itself. About 3 inches can be a starting point for a walkway or landscape bed; a driveway often needs a deeper, properly prepared base. These are planning suggestions, not universal installation rules.</p></section>
+        <section><h2>Cubic yards vs tons</h2><p>Cubic yards measure volume. Tons measure weight. Suppliers may sell driveway gravel, pea gravel, or crushed stone by either measure. Because rock size, material type, and moisture affect density, one cubic yard does not always weigh the same amount.</p></section>
+        <section><h2>Why your supplier's number may differ</h2><p>Your supplier may use a different tons-per-yard conversion for their specific material. Ask for their product density and use their advice when placing the order. The calculator's 1.4 tons per cubic yard is a transparent planning estimate—not a material specification.</p></section>
+        <section><h2>FAQ</h2><details><summary>Should I order extra gravel?</summary><p>This calculator adds a 10% planning allowance to help with normal variation. It is not a universal requirement; consider your site, access, and supplier guidance.</p></details><details><summary>Can I use this as a driveway gravel calculator?</summary><p>Yes. Enter the driveway dimensions and your planned depth. For vehicle areas, confirm base and depth requirements with a qualified local contractor or supplier.</p></details><details><summary>Does this work for pea gravel?</summary><p>Yes, as a volume planning tool. Check the supplier's density for a more material-specific ton estimate.</p></details></section>
+      </article>
+      <aside className="affiliate-slot" aria-label="Reserved affiliate recommendations"><strong>Future project recommendations</strong><span>Space reserved for useful items such as landscape fabric, edging, wheelbarrows, and compactors.</span></aside>
+      <aside className="ad-slot bottom" aria-label="Reserved advertising space">Reserved for a future sponsor</aside>
+    </main>
+    <footer>Free gravel calculator for practical planning.</footer>
+  </>
 }
 
 createRoot(document.getElementById('root')).render(<App />)
