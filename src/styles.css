@@ -1,0 +1,22 @@
+:root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202923; background: #f5f6f2; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; line-height: 1.5; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.site-shell { max-width: 940px; margin: 0 auto; padding: 34px 18px 56px; }
+.hero { max-width: 720px; margin: 0 auto 26px; text-align: center; }
+.eyebrow { color: #59734a; font-size: .81rem; font-weight: 750; letter-spacing: .08em; margin: 0 0 7px; text-transform: uppercase; }
+h1, h2 { color: #1f3424; line-height: 1.15; }
+h1 { font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: -.045em; margin: 0; }
+.intro { color: #4d5c52; font-size: clamp(1rem, 2.5vw, 1.18rem); margin: 14px auto 0; }
+.ad-slot { border: 1px dashed #bec8b9; border-radius: 8px; color: #768271; font-size: .78rem; min-height: 48px; display: grid; place-items: center; margin: 16px 0; }
+.calculator-card { background: #fff; border: 1px solid #e0e5dd; border-radius: 16px; box-shadow: 0 8px 28px #1520160d; overflow: hidden; }
+.calculator-heading { padding: 25px 22px 0; }.calculator-heading h2 { margin: 0; font-size: 1.42rem; }.calculator-heading p { color: #576359; margin: 6px 0 0; }
+form { padding: 20px 22px 24px; }.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+label { color: #344139; display: grid; font-size: .91rem; font-weight: 700; gap: 6px; } label span { color: #67736a; font-weight: 500; }
+input, select { background: #fff; border: 1px solid #aeb9ad; border-radius: 8px; color: #182019; min-height: 45px; padding: 8px 10px; width: 100%; } input:focus, select:focus, button:focus-visible { outline: 3px solid #8db56f; outline-offset: 2px; } [aria-invalid="true"] { border-color: #ac3535; }
+.hint { color: #5d6a60; font-size: .82rem; margin: 14px 0; }.errors { background: #fff0ef; border-left: 3px solid #b13636; color: #852929; font-size: .9rem; padding: 7px 12px; }.errors p { margin: 3px 0; }
+.primary-button, .secondary-button { border: 0; border-radius: 8px; font-weight: 750; padding: 12px 16px; }.primary-button { background: #2f5c36; color: #fff; }.primary-button:hover { background: #244b2b; }
+.result { background: #eaf1e5; border-top: 1px solid #d8e4d2; padding: 25px 22px; }.empty-result { color: #647063; margin: 0; }.result-label { color: #436044; font-weight: 750; margin: 0 0 2px; }.yards { color: #1f4427; display: block; font-size: clamp(2rem, 8vw, 3.1rem); font-weight: 800; letter-spacing: -.04em; }.yards span { font-size: .46em; letter-spacing: 0; }.weight { margin: 18px 0; }.order { background: #fff; border: 1px solid #cfddca; border-radius: 10px; display: grid; padding: 13px; }.order span { color: #425845; font-size: .84rem; font-weight: 750; text-transform: uppercase; }.order strong { color: #204c29; font-size: 1.55rem; }.order small { color: #5f6f61; margin-top: 3px; }.actions { display: flex; align-items: center; gap: 14px; margin-top: 18px; }.copy-status { color: #315339; font-size: .88rem; margin: 10px 0 0; }.copy-error { color: #852929; }.secondary-button { background: #2f5c36; color: #fff; }.text-button { background: transparent; border: 0; color: #345c3b; font-weight: 750; text-decoration: underline; }.assumption { color: #536057; font-size: .86rem; margin: 0; padding: 15px 22px; }
+.content { max-width: 760px; margin: 46px auto 0; }.content section { border-bottom: 1px solid #dce1da; padding: 0 0 25px; margin-bottom: 26px; }.content h2 { font-size: 1.4rem; margin: 0 0 8px; }.content p { color: #4c5a50; margin: 0; }.method { background: #edf1e9; border-radius: 9px; margin-top: 16px; padding: 14px; }.method strong { color: #315339; }.method p { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .84rem; margin-top: 7px; } details { border-top: 1px solid #d7ded3; padding: 13px 0; } summary { color: #284c30; cursor: pointer; font-weight: 750; } details p { margin: 8px 0 0; }.affiliate-slot { background: #edf1e9; border-radius: 10px; color: #506052; display: grid; gap: 3px; padding: 16px; }.affiliate-slot strong { color: #304c35; }.affiliate-slot span { font-size: .88rem; }.bottom { margin-top: 20px; } footer { background: #203825; color: #dce7d8; font-size: .85rem; padding: 20px; text-align: center; }
+@media (min-width: 700px) { .site-shell { padding-top: 56px; }.calculator-heading, form, .result, .assumption { padding-left: 34px; padding-right: 34px; }.field-grid { grid-template-columns: repeat(4, 1fr); } }
