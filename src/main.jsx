@@ -62,7 +62,14 @@ function App() {
     <>
       <main className="site-shell">
         <header className="hero">
-          <p className="eyebrow">Simple gravel estimator</p>
+          <div className="brand">
+            <img
+              className="brand-logo"
+              src="/athena-calculators-logo.jpg"
+              alt="ATHENA Calculators"
+            />
+          </div>
+          <p className="eyebrow">GRAVEL CALCULATOR</p>
           <h1>How Much Gravel Do I Need?</h1>
           <p className="intro">
             This is a free gravel calculator for homeowners, contractors, and
