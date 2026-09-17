@@ -8,10 +8,11 @@ button { cursor: pointer; }
 .brand-logo { display: block; width: min(360px, 82vw); height: auto; margin: 0 auto; }
 
 .hero { max-width: 720px; margin: 0 auto 26px; text-align: center; }
-.eyebrow { color: #59734a; font-size: .81rem; font-weight: 750; letter-spacing: .08em; margin: 0 0 7px; text-transform: uppercase; }
+.eyebrow { color: #b08a35; font-size: .81rem; font-weight: 750; letter-spacing: .08em; margin: 0 0 7px; text-transform: uppercase; }
 h1, h2 { color: #1f3424; line-height: 1.15; }
-h1 { font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: -.045em; margin: 0; }
-.intro { color: #4d5c52; font-size: clamp(1rem, 2.5vw, 1.18rem); margin: 14px auto 0; }
+h1 {
+  overflow-wrap: anywhere; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: -.045em; margin: 0; }
+.intro { color: #536078; font-size: clamp(1rem, 2.5vw, 1.18rem); margin: 14px auto 0; }
 .ad-slot { border: 1px dashed #bec8b9; border-radius: 8px; color: #768271; font-size: .78rem; min-height: 48px; display: grid; place-items: center; margin: 16px 0; }
 .calculator-card { background: #fff; border: 1px solid #e0e5dd; border-radius: 16px; box-shadow: 0 8px 28px #1520160d; overflow: hidden; }
 .calculator-heading { padding: 25px 22px 0; }.calculator-heading h2 { margin: 0; font-size: 1.42rem; }.calculator-heading p { color: #576359; margin: 6px 0 0; }
