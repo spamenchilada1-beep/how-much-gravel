@@ -366,6 +366,10 @@ function App() {
         </article>
       </main>
 
+      <nav aria-label="More ATHENA Calculators">
+        <p><strong>More ATHENA Calculators:</strong> <a href="https://mulch-calculator-5xl.pages.dev/">Mulch Calculator</a> · <a href="https://concrete-calculator-cic.pages.dev/">Concrete Calculator</a> · <a href="https://flooring-calculator.pages.dev/">Flooring Calculator</a></p>
+      </nav>
+
       <footer>
         <p>Free gravel calculator for practical planning.</p>
         <p>As an Amazon Associate I earn from qualifying purchases.</p>
