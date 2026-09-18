@@ -253,14 +253,14 @@ function App() {
           </p>
           <div className="affiliate-links">
             <a
-              href="https://www.amazon.com/s?k=landscape+gravel&tag=athena-20"
+              href="https://www.amazon.com/s?k=landscape+gravel+bags&tag=athena-20"
               target="_blank"
               rel="sponsored noopener"
             >
-              Shop landscape gravel <span>(paid link)</span>
+              Shop bagged landscape gravel <span>(paid link)</span>
             </a>
             <a
-              href="https://www.amazon.com/s?k=landscape+fabric+edging&tag=athena-20"
+              href="https://www.amazon.com/s?k=landscape+fabric+landscape+edging&tag=athena-20"
               target="_blank"
               rel="sponsored noopener"
             >
