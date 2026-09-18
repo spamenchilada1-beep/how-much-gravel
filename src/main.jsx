@@ -335,6 +335,26 @@ function App() {
           </section>
 
           <section>
+            <h2>Gravel calculator for driveways, walkways, patios, and beds</h2>
+            <p>
+              Use the calculator for common rectangular project areas such as
+              driveways, walkways, patios, and landscape beds. For irregular
+              spaces, split the area into simple sections, calculate each
+              section, and add the results together.
+            </p>
+          </section>
+
+          <section>
+            <h2>Ordering gravel from a supplier</h2>
+            <p>
+              Cubic yards tell you the volume of material. Your supplier may
+              convert that volume to tons using a density specific to the
+              gravel or crushed stone you are buying. Confirm the supplier's
+              density and final quantity before placing a bulk order.
+            </p>
+          </section>
+
+          <section>
             <h2>FAQ</h2>
 
             <details>
