@@ -245,11 +245,11 @@ function App() {
         </section>
 
         <section className="affiliate-card" aria-label="Recommended gravel project supplies">
-          <p className="affiliate-label">PROJECT SUPPLIES</p>
-          <h2>Need supplies for your gravel project?</h2>
+          <p className="affiliate-label">GRAVEL PROJECT SUPPLIES</p>
+          <h2>Ready to order your project materials?</h2>
           <p>
-            Browse gravel, landscape materials, fabric, edging, and other
-            project supplies on Amazon.
+            Use your gravel estimate to plan the job, then compare landscape
+            gravel, fabric, and edging on Amazon.
           </p>
           <div className="affiliate-links">
             <a
