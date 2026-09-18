@@ -244,6 +244,31 @@ function App() {
           </p>
         </section>
 
+        <section className="affiliate-card" aria-label="Recommended gravel project supplies">
+          <p className="affiliate-label">PROJECT SUPPLIES</p>
+          <h2>Need supplies for your gravel project?</h2>
+          <p>
+            Browse gravel, landscape materials, fabric, edging, and other
+            project supplies on Amazon.
+          </p>
+          <div className="affiliate-links">
+            <a
+              href="https://www.amazon.com/s?k=landscape+gravel&tag=athena-20"
+              target="_blank"
+              rel="sponsored noopener"
+            >
+              Shop landscape gravel <span>(paid link)</span>
+            </a>
+            <a
+              href="https://www.amazon.com/s?k=landscape+fabric+edging&tag=athena-20"
+              target="_blank"
+              rel="sponsored noopener"
+            >
+              Shop landscape fabric &amp; edging <span>(paid link)</span>
+            </a>
+          </div>
+        </section>
+
         <article className="content">
           <section>
             <h2>How the calculator works</h2>
@@ -342,7 +367,8 @@ function App() {
       </main>
 
       <footer>
-        <span>Free gravel calculator for practical planning.</span>{' '}
+        <p>Free gravel calculator for practical planning.</p>
+        <p>As an Amazon Associate I earn from qualifying purchases.</p>
         <a href="/privacy.html">Privacy Policy</a>
       </footer>
     </>
