@@ -10,6 +10,20 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-V8PMY7T7J7');
+    document.addEventListener('click', function(event) {
+      const link = event.target.closest && event.target.closest('a[href]');
+      if (!link) return;
+      try {
+        const url = new URL(link.href, window.location.href);
+        if (url.hostname === 'www.amazon.com' || url.hostname.endsWith('.amazon.com')) {
+          gtag('event', 'affiliate_click', {
+            affiliate_network: 'amazon',
+            link_url: url.href,
+            link_text: (link.textContent || '').trim().slice(0, 100)
+          });
+        }
+      } catch (_) {}
+    });
     </script>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8PMY7T7J7"></script>
