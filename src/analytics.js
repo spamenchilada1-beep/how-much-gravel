@@ -6,4 +6,7 @@ export function track(eventName, properties = {}) {
   if (typeof window.cloudflareWebAnalytics === 'function') {
     window.cloudflareWebAnalytics(eventName, properties)
   }
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, properties)
+  }
 }
