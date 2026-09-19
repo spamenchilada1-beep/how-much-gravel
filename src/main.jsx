@@ -35,7 +35,7 @@ function App() {
   const onSubmit = event => {
     event.preventDefault()
     setStarted(true)
-    if (validResult) track('calculation_completed', { projectType: form.projectType })
+    if (validResult) track('calculator_completed', { projectType: form.projectType, calculator: 'gravel' })
   }
 
   const copy = async () => {
