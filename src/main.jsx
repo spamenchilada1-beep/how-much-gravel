@@ -344,6 +344,8 @@ function App() {
             </p>
           </section>
 
+          <p><a href="/gravel-calculator-tons.html">Need help with tonnage? Read the gravel tons planning guide.</a></p>
+
           <section>
             <h2>Ordering gravel from a supplier</h2>
             <p>
