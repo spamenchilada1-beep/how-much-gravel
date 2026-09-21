@@ -391,7 +391,7 @@ function App() {
       </main>
 
       <nav aria-label="More ATHENA Calculators">
-        <p><strong>More ATHENA Calculators:</strong> <a href="https://athena-public-platform.pages.dev/#tools">ATHENA Tools</a> · <a href="https://mulch-calculator-5xl.pages.dev/">Mulch Calculator</a> · <a href="https://concrete-calculator-cic.pages.dev/">Concrete Calculator</a> · <a href="https://flooring-calculator.pages.dev/">Flooring Calculator</a></p>
+        <p><strong>More ATHENA Calculators:</strong> <a href="https://athena-public-platform.pages.dev/tools/">ATHENA Tools</a> · <a href="https://mulch-calculator-5xl.pages.dev/">Mulch Calculator</a> · <a href="https://concrete-calculator-cic.pages.dev/">Concrete Calculator</a> · <a href="https://flooring-calculator.pages.dev/">Flooring Calculator</a></p>
       </nav>
 
       <footer>
