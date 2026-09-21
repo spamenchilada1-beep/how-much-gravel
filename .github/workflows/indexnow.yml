@@ -1,0 +1,35 @@
+name: Notify IndexNow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "src/**"
+      - "public/**"
+      - "package.json"
+      - "sitemap.xml"
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify IndexNow of updated pages
+        env:
+          INDEXNOW_KEY: d4f6a8c0e23456789abcdef0123456789
+        run: |
+          sleep 60
+          urls=(
+            "https://how-much-gravel.pages.dev/"
+            "https://how-much-gravel.pages.dev/gravel-calculator-tons"
+            "https://how-much-gravel.pages.dev/how-much-gravel-do-i-need"
+            "https://how-much-gravel.pages.dev/gravel-driveway-calculator"
+          )
+          for url in "${urls[@]}"; do
+            code=$(curl -sS -G -o /dev/null -w "%{http_code}" \
+              "https://api.indexnow.org/indexnow" \
+              --data-urlencode "url=$url" \
+              --data-urlencode "key=$INDEXNOW_KEY")
+            echo "$code $url"
+          done
